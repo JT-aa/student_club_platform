@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MembersCard from './MembersCard';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -11,14 +11,21 @@ const GroupCard = ({ group }) => {
 
     const [members, setMembers] = useState([]);
 
-    // Fetch list of members in the group
-    axios.get(`http://localhost:8000/api/groups/${group.id}/users`)
-    .then(response => {
-        setMembers(response.data);
-    })
-    .catch(error => {
-        console.error(error);
-    });
+
+    useEffect(() => {
+        fetchMembers();
+    }, []);
+
+    function fetchMembers() {
+        // Fetch list of members in the group
+        axios.get(`http://localhost:8000/api/groups/${group.id}/users`)
+        .then(response => {
+            setMembers(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
 
 
     return (

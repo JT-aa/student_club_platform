@@ -1,10 +1,12 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables from a .env file into process.env
 import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
 //import multer from "multer"; // For handling multipart/form-data (file uploads)
 
-const port = 8000;
+const port = process.env.PORT || 5000;
 const app = express();
 //const upload = multer(); // Create a Multer instance with no configuration
 
