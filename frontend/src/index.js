@@ -16,6 +16,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/group/:id" element={<GroupScreen />} />
     </Route>
   )
 );

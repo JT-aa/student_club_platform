@@ -6,6 +6,7 @@ import GroupCard from '../components/GroupCard.jsx';
 
 const HomeScreen = () => {
     const [groups, setGroups] = useState([]);
+    const [members, setMembers] = useState([]);
 
     useEffect(() => {
         fetchGroups();
@@ -28,7 +29,7 @@ const HomeScreen = () => {
             <Row>
                 {groups.map((group) => (
                     <Col key={group.id} sm={12} md={6} lg={4} xl={3}>
-                        <GroupCard group={group} />
+                        <GroupCard group={group}/>
                     </Col>
                 ))}
             </Row>
