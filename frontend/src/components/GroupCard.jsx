@@ -5,6 +5,8 @@ import MembersCard from './MembersCard';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import logo from '../assets/logo.jpg'
+
 const GroupCard = ({ group }) => {
 
     const [members, setMembers] = useState([]);
@@ -22,11 +24,12 @@ const GroupCard = ({ group }) => {
     return (
 
         <Card className='my-3 p-3 rounded'>
-      {/* <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant='top' />
-      </Link> */}
+      
 
       <Card.Body>
+      <Link to={`/group/${group.id}`}>
+        <Card.Img src={logo} variant='top' />
+      </Link>
         <Link to={`/group/${group.id}`}>
           <Card.Title as='div' className='group-title'>
             <strong>{group.name}</strong>

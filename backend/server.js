@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 //import multer from "multer"; // For handling multipart/form-data (file uploads)
 
+const port = 8000;
 const app = express();
 //const upload = multer(); // Create a Multer instance with no configuration
 
@@ -209,6 +210,6 @@ app.delete("/api/users/:userId/groups/:groupId", async (req, res) => {
     res.json(record);
 });
 
-app.listen(8000, () => {
+app.listen(port, () => {
     console.log("Server running on http://localhost:8000 🎉 🚀");
 });

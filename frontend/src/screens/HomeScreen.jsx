@@ -24,7 +24,7 @@ const HomeScreen = () => {
 
     return (
         <div>
-            <button>Add New Group</button>
+            {/* <button>Add New Group</button> */}
 
             <Row>
                 {groups.map((group) => (
