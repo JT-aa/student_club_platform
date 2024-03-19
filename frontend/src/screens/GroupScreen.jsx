@@ -26,15 +26,6 @@ const GroupScreen = () => {
                 console.error(error);
             });
 
-        // Fetch list of members in the group
-        axios.get(`http://localhost:8000/api/groups/${groupId}/users`)
-            .then(response => {
-                setMembers(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
         // Fetch list of all users
         axios.get('http://localhost:8000/api/users')
             .then(response => {
@@ -43,8 +34,16 @@ const GroupScreen = () => {
             .catch(error => {
                 console.error(error);
             });
-    }, [members]);
 
+            // Fetch list of members in the group
+        axios.get(`http://localhost:8000/api/groups/${groupId}/users`)
+        .then(response => {
+            setMembers(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }, []);
 
     if (!group) {
         return <div>Loading...</div>;
@@ -54,7 +53,14 @@ const GroupScreen = () => {
         axios.delete(`http://localhost:8000/api/users/${memberId}/groups/${groupId}`)
             .then(response => {
                 console.log('Member deleted:', response.data);
-                setMembers(members.filter(member => member.id !== memberId));
+                // Fetch list of members in the group
+                axios.get(`http://localhost:8000/api/groups/${groupId}/users`)
+                .then(response => {
+                    setMembers(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
             })
             .catch(error => {
                 console.error('Error deleting member:', error);
@@ -66,7 +72,13 @@ const GroupScreen = () => {
         axios.post(`http://localhost:8000/api/users/${memberId}/groups/${groupId}`, { role: 'member' })
             .then(response => {
                 console.log('Member added:', response.data);
-                setMembers([...members, response.data]);
+                axios.get(`http://localhost:8000/api/groups/${groupId}/users`)
+                .then(response => {
+                    setMembers(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
             })
             .catch(error => {
                 console.error('Error adding member:', error);

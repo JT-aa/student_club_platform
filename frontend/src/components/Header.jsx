@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 const Header = ({ title }) => {
     return (
         <header>
-            <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+            <Navbar bg="primary" variant="dark" expand="md" collapseOnSelect>
                 <Container>
                 <LinkContainer to="/">
                     <Navbar.Brand>
