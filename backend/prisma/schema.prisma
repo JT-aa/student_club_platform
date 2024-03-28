@@ -1,6 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+
+// Prisma Commands
+// npx prisma init : to create prisma folder and initialize prisma
+// npx prisma studio: to open prisma studio and visualize the database
+// npx prisma db push: to push the schema to the database or any changes to the schema
+
+
 generator client {
   provider = "prisma-client-js"
 }

@@ -4,6 +4,7 @@ dotenv.config(); // Load environment variables from a .env file into process.env
 import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
+import bcrypt from "bcrypt";
 //import multer from "multer"; // For handling multipart/form-data (file uploads)
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -13,8 +14,11 @@ const app = express();
 //const upload = multer(); // Create a Multer instance with no configuration
 
 app.use(cors());
+
+// bodyparser middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(morgan("dev"));
 
 const { PrismaClient } = pkg;
@@ -28,6 +32,97 @@ app.get("/api/users", async (req, res) => {
     const users = await prisma.user.findMany();
     res.json(users);
 });
+
+// @name    authUser
+// @desc    Auth user & get token
+// @route   POST /api/users/login
+// @access  Public
+app.post("/api/users/login", async (req, res) => {
+    const { email, password } = req.body;
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email,
+        },
+    });
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+        res.json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        });
+    } else {
+        res.status(401);
+        res.json({ message: "Invalid email or password" });
+        // throw new Error("Invalid email or password");
+    }
+});
+
+// @name    registerUser
+// @desc    Register user 
+// @route   POST /api/users
+// @access  Public
+app.post("/api/users", async (req, res) => {
+    res.send("register user");
+});
+
+// @name    logoutUser
+// @desc    Logout user / clear cookie
+// @route   POST /api/users/logout
+// @access  Private
+app.post("/api/users/logout", async (req, res) => {
+    res.send("logout user");
+});
+
+// @name    getUserProfile
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+app.get("/api/users/profile", async (req, res) => {
+    res.send("get user profile");
+});
+
+// @name    updateUserProfile
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+app.put("/api/users/profile", async (req, res) => {
+    res.send("update user profile");
+});
+
+// @name    getUsers
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private/Admin
+// app.get("/api/users", async (req, res) => {
+//     res.send("get all users");
+// });
+
+// @name    getUserById
+// @desc    Get user by ID
+// @route   GET /api/users/:id
+// @access  Private/Admin
+// app.get("/api/users/:id", async (req, res) => {
+//     res.send("get user by id");
+// });
+
+// @name    updateUser
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+// app.put("/api/users/:id", async (req, res) => {
+//     res.send("update user");
+// });
+
+// @name    deleteUser
+// @desc    Delete user
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+// app.delete("/api/users/:id", async (req, res) => {
+//     res.send("delete user");
+// });
+
+
 
 app.get("/api/users/:id", async (req, res) => {
     const { id } = req.params;

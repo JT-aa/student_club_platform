@@ -17,7 +17,7 @@ const MembersRow = ({ member, isAddButton, deleteMember, addMember}) => {
     return (
         <div className="member-row">
             <span>{member.name}</span>
-            <button onClick={handleButtonClick}>
+            <button className='btn btn-light my-1' onClick={handleButtonClick}>
                 {isAddButton ? '+' : 'x'}
             </button>
         </div>
